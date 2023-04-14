@@ -81,6 +81,9 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-wor
     if ($null -ne $Parameter) {
         $arg5hash['Parameter'] = $Parameter
     }
+    if (-not [string]::IsNullOrEmpty($Reason)) {
+        $arg5hash['Reason'] = $Reason
+    }
     $arguments += "`"$(($arg5hash | ConvertTo-Json -Compress) -replace '"', '\"')`""
     # arg 6 : SSM endpoint URL
     $arguments += "https://ssm.$($region).amazonaws.com"
