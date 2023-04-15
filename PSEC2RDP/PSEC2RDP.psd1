@@ -7,7 +7,7 @@
     Copyright            = '(c) Takuya Shibata. All rights reserved.'
     Description          = 'Remote Desktop Utility for Amazon EC2'
     PowerShellVersion    = '7.0.0'
-    NestedModules        = @('PSEC2RDP.psm1')
+    RootModule           = 'PSEC2RDP.psm1'
     FunctionsToExport    = @('Start-SSMSessionEx', 'Start-EC2RDPClient', 'Start-SSMRDPClient')
     PrivateData          = @{
         PSData = @{
