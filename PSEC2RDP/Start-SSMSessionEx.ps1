@@ -71,7 +71,7 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-wor
     $arguments += $Region
     # arg3 : StartSession
     $arguments += 'StartSession'
-    # arg4 : shared credentials file profile nam
+    # arg4 : shared credentials file profile name
     $arguments += $ProfileName
     # arg5 : parameter json
     $arg5hash = @{ Target = $Target; }
