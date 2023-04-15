@@ -1,4 +1,4 @@
-#Requires -Modules AWS.Tools.SimpleSystemsManagement
+#Requires -Modules AWS.Tools.EC2, AWS.Tools.SimpleSystemsManagement
 
 function Test-SSMInstanceStatus () {
     [CmdletBinding()]
