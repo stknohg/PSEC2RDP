@@ -40,7 +40,11 @@ function Get-RDPLocalPort () {
 
     $p = $StartPort
     while ($p -le 65535) {
-        $result = Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction Ignore
+        $result = if ($IsWindows) {
+            Get-NetTCPConnection -LocalPort $p -State Listen -ErrorAction Ignore
+        } else {
+            lsof -iTCP:$p | grep 'LISTEN'
+        }
         if ($null -eq $result) {
             break
         }
@@ -146,7 +150,7 @@ function Start-SSMRDPClient () {
     Write-Host 'Administrator password acquisition completed'
 
     # Start RDP client
-    $beginBlock, $mainBlock, $endBlock = Get-DefaultMSTSCScriptBlocks
+    $beginBlock, $mainBlock, $endBlock = if ($IsWindows) { Get-DefaultMSTSCScriptBlocks } else { Get-DefaultMacOSScriptBlocks }
     try {
         # Invoke begin scriptblock
         $beginBlock.Invoke($hostName, $localPort, $adminCredential)

@@ -94,7 +94,7 @@ function Start-EC2RDPClient () {
     Write-Host 'Administrator password acquisition completed'
 
     # Start RDP client
-    $beginBlock, $mainBlock, $endBlock = Get-DefaultMSTSCScriptBlocks
+    $beginBlock, $mainBlock, $endBlock = if ($IsWindows) { Get-DefaultMSTSCScriptBlocks } else { Get-DefaultMacOSScriptBlocks }
     try {
         # Invoke begin scriptblock
         $beginBlock.Invoke($hostName, $localPort, $adminCredential)

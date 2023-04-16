@@ -14,7 +14,7 @@ Import-Module .\PSEC2RDP\PSEC2RDP\ -Force
 
 ## Prerequisites
 
-* Windows
+* Windows, (Experimental) macOS
 * PowerShell 7+
 * AWS Tools for PowerShell ([AWS.Tools.EC2](https://www.powershellgallery.com/packages/AWS.Tools.EC2/), [AWS.Tools.SimpleSystemsManagement](https://www.powershellgallery.com/packages/AWS.Tools.SimpleSystemsManagement/) modules)
 * [Session Manager plugin](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-working-with-install-plugin.html)

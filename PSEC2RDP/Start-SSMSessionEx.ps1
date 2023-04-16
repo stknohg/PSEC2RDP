@@ -94,7 +94,12 @@ https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-wor
     # start session-manager-plugin
     if ($PassThru) {
         # PassThru
-        $proc = Start-Process -FilePath 'session-manager-plugin' -ArgumentList $arguments -PassThru -WindowStyle Hidden
+        $proc = if ($IsWindows) {
+            Start-Process -FilePath 'session-manager-plugin' -ArgumentList $arguments -PassThru -WindowStyle Hidden
+        } else {
+            # -WindowStyle parameter is not supported in non-Windows environment
+            Start-Process -FilePath 'session-manager-plugin' -ArgumentList $arguments -PassThru
+        }
         Write-Host ('Starting session with SessionId: {0}' -f $session.SessionId)
         Write-Host ('Start session-manager-plugin process ({0})' -f $proc.Id)
         return [PSCustomObject]@{

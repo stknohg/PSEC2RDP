@@ -80,6 +80,48 @@ function Get-DefaultMSTSCScriptBlocks () {
         })
 }
 
+function Get-DefaultMacOSScriptBlocks () {
+    # Return 3 scriptblocks (begin block, main block, end block)
+    return ( {
+            param ([string]$HostName, [int]$Port, [PSCredential]$Credential)
+
+            # Copy password to clipboard
+            Write-Host ('Copy {0} passwrod to clipboard.' -f $Credential.UserName)
+            $Credential.GetNetworkCredential().Password | Set-Clipboard
+        }, {
+            param ([string]$HostName, [int]$Port, [PSCredential]$Credential, [bool]$Wait)
+
+            # Open temporary .rdp file
+            Write-Host ('Start RDP client')
+            $tempRDPFileName = Join-Path '/tmp/' $('PSEC2RDP-{0}.rdp' -f (New-Guid))
+@"
+full address:s:{0}:{1}
+username:s:{2}
+prompt for credentials:i:1
+"@ -f $HostName, $Port, $($Credential.UserName) | Out-File -FilePath $tempRDPFileName -Force
+            Write-Verbose ('Write temporary .rdp file to {0}' -f $tempRDPFileName)
+
+            # Invoke Item
+            Write-Host ('Conneting to {0}:{1}' -f $HostName, $Port)
+            Invoke-Item -LiteralPath $tempRDPFileName
+            Start-Sleep -Seconds 3
+            if ($Wait) {
+                Write-Host 'Press Ctrl+C to stop process...'
+                while ($true) {
+                    Start-Sleep -Seconds 1
+                }
+            }
+            # Delete temporary .rdp file immediately
+            if ((Test-Path -LiteralPath $tempRDPFileName)) {
+                Write-Verbose ('Delete temporary .rdp file {0}' -f $tempRDPFileName)
+                Remove-Item -LiteralPath $tempRDPFileName -Force
+            }
+        } , {
+            param ([string]$HostName, [int]$Port, [PSCredential]$Credential)
+            # do nothing
+        })
+}
+
 <#
 #
 # WIP
