@@ -97,7 +97,7 @@ function Start-EC2RDPClient () {
     $beginBlock, $mainBlock, $endBlock = if ($IsWindows) { Get-DefaultMSTSCScriptBlocks } else { Get-DefaultMacOSScriptBlocks }
     try {
         # Invoke begin scriptblock
-        $beginBlock.Invoke($hostName, $localPort, $adminCredential)
+        $beginBlock.Invoke($hostName, $Port, $adminCredential)
 
         # Invoke main scriptblock
         $mainBlock.Invoke($hostName, $Port, $adminCredential, -not $NoWait)
