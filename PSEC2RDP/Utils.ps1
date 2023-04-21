@@ -93,18 +93,15 @@ function Get-DefaultMacOSScriptBlocks () {
 
             Write-Host ('Start Parallels client') 
             # ref : https://download.parallels.com/ras/v19/docs/en_US/Integrating-with-Parallels-RAS-Clients.pdf
-            $debugUrl = 'tuxclient:///?Command=LaunchApp&ConnType=2&Server={0}&Backup=&Port={1}&UserName={2}&Password={3}' -f $HostName, $Port, $Credential.UserName, '********'
+            $debugUrl = 'tuxclient:///?Command=LaunchApp&ConnType=2&Server={0}&Backup=&Port={1}&LoginEx={2}&Password={3}' -f $HostName, $Port, $Credential.UserName, '********'
             Write-Verbose ('RAS Url : {0}' -f $debugUrl)
-            $rasUrl = 'tuxclient:///?Command=LaunchApp&ConnType=2&Server={0}&Backup=&Port={1}&UserName={2}&Password={3}' -f $HostName, $Port, $Credential.UserName, $($Credential.GetNetworkCredential().Password)
+            $rasUrl = 'tuxclient:///?Command=LaunchApp&ConnType=2&Server={0}&Backup=&Port={1}&LoginEx={2}&Password={3}' -f $HostName, $Port, $Credential.UserName, $($Credential.GetNetworkCredential().Password)
             # Invoke Item
             Write-Host ('Conneting to {0}:{1}' -f $HostName, $Port)
             open $rasUrl
-            Start-Sleep -Seconds 3
             if ($Wait) {
-                Write-Host 'Press Ctrl+C to stop process...'
-                while ($true) {
-                    Start-Sleep -Seconds 1
-                }
+		        # To prevent password appearing from arguments, wait for the .app process.
+                open --wait-app '/Applications/Parallels Client.app'
             }
         } , {
             param ([string]$HostName, [int]$Port, [PSCredential]$Credential)
