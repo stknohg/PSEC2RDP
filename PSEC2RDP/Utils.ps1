@@ -101,7 +101,7 @@ function Get-DefaultMacOSScriptBlocks () {
             open $rasUrl
             if ($Wait) {
 		        # To prevent password appearing from arguments, wait for the .app process.
-                open --wait-app '/Applications/Parallels Client.app'
+                open --wait-apps '/Applications/Parallels Client.app'
             }
         } , {
             param ([string]$HostName, [int]$Port, [PSCredential]$Credential)
