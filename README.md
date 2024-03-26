@@ -1,6 +1,14 @@
-# PSEC2RDP
+# [Experimental] PSEC2RDP
 
 Remote Desktop Utility for Amazon EC2.
+
+## Notes
+
+This repository is experimental.  
+
+Recommend using [ec2rdp](https://github.com/stknohg/ec2rdp).
+
+* [stknohg/ec2rdp](https://github.com/stknohg/ec2rdp)
 
 ## How to install
 
