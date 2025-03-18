@@ -10,6 +10,14 @@ Recommend using [ec2rdp](https://github.com/stknohg/ec2rdp).
 
 * [stknohg/ec2rdp](https://github.com/stknohg/ec2rdp)
 
+### Support for interactive Start-SSMSession
+
+Starting with AWS Tools for PowerShell 5.0.0-preview003, interactive execution of the `Start-SSMSession` cmdlet is officially supported.
+
+* [V5 Development Tracker #357](https://github.com/aws/aws-tools-for-powershell/issues/357)
+
+So, no need to use this module.
+
 ## How to install
 
 Currently, No plans to publish this module.  
